@@ -1,6 +1,6 @@
 import { LockOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, TextField, Typography } from "@mui/material";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../providers/AuthProvider";
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
                 <Avatar sx={{ margin: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlined />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" color="white">
                     Sign in
                 </Typography>
                 <Box component="form" onSubmit={handleLogin}  sx={{ mt: 1 }}>
@@ -52,7 +52,6 @@ const LoginPage = () => {
                         type="password"
                         autoComplete="current-password"
                     />
-                    
                     <Button 
                         type="submit"
                         fullWidth

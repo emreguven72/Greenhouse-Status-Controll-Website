@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
                 })
             );
         }
-
         setUser(user);
         localStorage.setItem('auth',JSON.stringify(user));
         navigate(redirectPath, { replace: true });
