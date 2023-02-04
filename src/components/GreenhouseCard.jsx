@@ -30,7 +30,7 @@ export default function GreenhouseCard({ onClick, temperature, humidity, name, a
           <Typography gutterBottom variant="h4" component="div" color="white">
             {name}
           </Typography>
-          <Typography component='p' color="white" sx={{ fontSize: 12 }}>
+          <Typography component='p' color="white" sx={{ fontSize: 12, overflow:'hidden', height:'50px' }}>
            <span style={{ fontSize: 14 }}>Address:</span> {address}
           </Typography>
         </CardContent>

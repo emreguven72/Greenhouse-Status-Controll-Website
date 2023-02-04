@@ -11,11 +11,12 @@ export const AuthProvider = ({ children }) => {
     const redirectPath = location.state?.path || "/home";
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('auth')));
+    const [greenhouses, setGreenhouses] = useState(JSON.parse(localStorage.getItem('authGreenhouses')));
 
     const login = async(email, password) => {
         const response = await axios.get(`http://localhost:1337/user/getbyemail?email=${email}`);
-        const user = response.data.data;
-        if(!user) {
+        const _user = response.data.data;
+        if(!_user) {
             navigate('/login');
             return(
                 toast.error('Incorrect Informations', {
@@ -29,7 +30,7 @@ export const AuthProvider = ({ children }) => {
                     theme: "colored",
                 })
             );
-        } else if(user.email !== email || user.password !== password) {
+        } else if(_user.email !== email || _user.password !== password) {
             return(
                 toast.error('Incorrect Password', {
                     position: "bottom-right",
@@ -43,17 +44,28 @@ export const AuthProvider = ({ children }) => {
                 })
             );
         }
-        setUser(user);
-        localStorage.setItem('auth',JSON.stringify(user));
+        setUser(_user);
+        setGreenhouses(_user.greenHouses);
+        localStorage.setItem('auth',JSON.stringify(_user));
+        localStorage.setItem('authGreenhouses', JSON.stringify(_user.greenHouses));
         navigate(redirectPath, { replace: true });
     }
 
     const logout = () => {
         setUser(null);
+        setGreenhouses(null);
         localStorage.removeItem('auth');
+        localStorage.removeItem('authGreenhouses')
     }
 
-    return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
+    const resetAuthGreenHouses = async() => {
+        const response = await axios.get(`http://localhost:1337/greenhouse/getbyemail?email=${user.email}`)
+        const _greenhouses = response.data.data;
+        setGreenhouses(_greenhouses);
+        localStorage.setItem('authGreenhouses',JSON.stringify(_greenhouses));
+    }
+
+    return <AuthContext.Provider value={{ user, greenhouses, login, logout, resetAuthGreenHouses }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => {

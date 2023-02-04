@@ -9,6 +9,7 @@ const RoutePath = () => {
         <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            
             <Route 
                 path="/home"
                 element={
